@@ -1,0 +1,1957 @@
+<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>LearnSync Hub | Modern Learning Platform</title>    <link rel="preconnect" href="https://fonts.googleapis.com">    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    <link rel="stylesheet" href="linear-style.css">    <!-- SVG Definitions -->    <svg width="0" height="0" style="position: absolute;">        <!-- Progress Circle Gradient -->        <defs>            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">                <stop offset="0%" stop-color="#5E6AD2" />                <stop offset="100%" stop-color="#8A8EF0" />            </linearGradient>        </defs>    </svg>    <style>
+        /* Preloader styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #13131A;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            position: relative;
+            animation: rotate 1s linear infinite;
+        }
+        
+        .loader::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(#0000 10%, #5E6AD2);
+            mask: radial-gradient(#0000 calc(100% - 5px), #000 0);
+            -webkit-mask: radial-gradient(#0000 calc(100% - 5px), #000 0);
+        }
+        
+        @keyframes rotate {
+            from {transform: rotate(0turn)}
+            to {transform: rotate(1turn)}
+        }
+        
+        .loader-text {
+            margin-top: 2rem;
+            font-size: 1.25rem;
+            color: #8F8FB3;
+            font-weight: 500;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.5s forwards;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0}
+            to {opacity: 1}
+        }
+        
+        .loader-logo {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .loader-logo i {
+            margin-right: 1rem;
+            background: linear-gradient(135deg, #5E6AD2, #8A8EF0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .accent {
+            background: linear-gradient(135deg, #FF5FA2, #FF9190);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        @keyframes scaleIn {
+            from {transform: scale(0.8); opacity: 0}
+            to {transform: scale(1); opacity: 1}
+        }
+    </style>
+</head>
+<body>    <!-- SVG Definitions for Progress Circle -->    <svg width="0" height="0" style="position: absolute; visibility: hidden;">        <defs>            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">                <stop offset="0%" stop-color="#5E6AD2" />                <stop offset="100%" stop-color="#8A8EF0" />            </linearGradient>        </defs>    </svg>        <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader-logo">
+            <i class="fas fa-brain"></i>
+            LearnSync<span class="accent">Hub</span>
+        </div>
+        <div class="loader"></div>
+        <div class="loader-text">Loading your learning environment...</div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>LearnSync<span class="accent">Hub</span></span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-header">
+                        <span>LEARNING TOOLS</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item active" data-tab="home">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </li>
+                        <li class="nav-item" data-tab="flashcards">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Flashcards</span>
+                        </li>
+                        <li class="nav-item" data-tab="quiz">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Quizzes</span>
+                        </li>
+                        <li class="nav-item" data-tab="habits">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Habits</span>
+                        </li>
+                        <li class="nav-item" data-tab="courses">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Courses</span>
+                        </li>
+                        <li class="nav-item" data-tab="reading">
+                            <i class="fas fa-book"></i>
+                            <span>Reading Log</span>
+                        </li>
+                        <li class="nav-item" data-tab="markdown">
+                            <i class="fas fa-edit"></i>
+                            <span>Markdown Editor</span>
+                        </li>
+                        <li class="nav-item" data-tab="videos">
+                            <i class="fas fa-video"></i>
+                            <span>Video Player</span>
+                        </li>
+                        <li class="nav-item" data-tab="timeline">
+                            <i class="fas fa-stream"></i>
+                            <span>Lesson Timeline</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-header">
+                        <span>INSIGHTS</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item" data-tab="analytics">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Learning Analytics</span>
+                        </li>
+                        <li class="nav-item" data-tab="progress">
+                            <i class="fas fa-tasks"></i>
+                            <span>Progress Report</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User Avatar">
+                    </div>
+                    <div class="user-details">
+                        <div class="user-name">Sarah Johnson</div>
+                        <div class="user-role">Student</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Home Tab -->
+            <section id="home-tab" class="content-tab active">
+                <div class="tab-header">
+                    <h1>Welcome to LearnSync Hub</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">My Dashboard</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <!-- Dashboard Overview -->
+                    <div class="dashboard-overview">
+                        <div class="welcome-card">
+                            <div class="welcome-content">
+                                <h2>Hello, Sarah!</h2>
+                                <p>Continue your learning journey. Here's what's waiting for you today.</p>
+                                <div class="streak-counter">
+                                    <div class="streak-icon">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <div class="streak-info">
+                                        <div class="streak-count">7</div>
+                                        <div class="streak-label">Day Streak</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="welcome-illustration">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3940/3940056.png" alt="Learning Illustration">
+                            </div>
+                        </div>
+
+                        <div class="stats-section">
+                            <h3>Learning Stats</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card highlight">
+                                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">12</div>
+                                        <div class="stat-label">Habits Completed</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">48</div>
+                                        <div class="stat-label">Flashcards Studied</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">3</div>
+                                        <div class="stat-label">Courses In Progress</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-book"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">2</div>
+                                        <div class="stat-label">Books Reading</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Access Section -->
+                    <div class="quick-access-section">
+                        <h3>Continue Learning</h3>
+                        <div class="quick-access-grid">
+                            <div class="quick-card gradient-1">
+                                <div class="quick-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="quick-content">
+                                    <h4>Advanced JavaScript</h4>
+                                    <p>Continue Module 3: Async Programming</p>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 65%"></div>
+                                    </div>
+                                    <span class="progress-text">65% Complete</span>
+                                </div>
+                            </div>
+                            <div class="quick-card gradient-2">
+                                <div class="quick-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="quick-content">
+                                    <h4>Cognitive Psychology</h4>
+                                    <p>Continue Chapter 5: Memory Models</p>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 42%"></div>
+                                    </div>
+                                    <span class="progress-text">42% Complete</span>
+                                </div>
+                            </div>
+                            <div class="quick-card gradient-3">
+                                <div class="quick-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="quick-content">
+                                    <h4>Data Analysis</h4>
+                                    <p>Continue Lab 7: Predictive Models</p>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 78%"></div>
+                                    </div>
+                                    <span class="progress-text">78% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Schedule -->
+                    <div class="schedule-section">
+                        <div class="section-header">
+                            <h3>Today's Schedule</h3>
+                            <button class="btn btn-text">View Calendar <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                        <div class="schedule-timeline">
+                            <div class="timeline-item completed">
+                                <div class="time-block">09:00 AM</div>
+                                <div class="timeline-content">
+                                    <h4>Morning Review Session</h4>
+                                    <p>Flashcards: Neural Networks</p>
+                                    <span class="status-badge completed">Completed</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item in-progress">
+                                <div class="time-block">11:30 AM</div>
+                                <div class="timeline-content">
+                                    <h4>Advanced JavaScript Course</h4>
+                                    <p>Lecture 12: Promises and Async/Await</p>
+                                    <span class="status-badge in-progress">In Progress</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-block">02:00 PM</div>
+                                <div class="timeline-content">
+                                    <h4>Cognitive Psychology Reading</h4>
+                                    <p>Chapter 5: Memory Models</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-block">04:30 PM</div>
+                                <div class="timeline-content">
+                                    <h4>Quiz: Data Analysis Fundamentals</h4>
+                                    <p>15 questions - 30 minutes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flashcards Tab -->
+            <section id="flashcards-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Flashcards</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">Create New Deck</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <!-- Flashcard Deck List -->
+                    <div id="flashcard-deck-container">
+                        <div class="deck-list" id="flashcard-deck-list">
+                            <!-- Deck items will be inserted here by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Flashcard Study Interface -->
+                    <div id="flashcard-container" style="display: none;">
+                        <div class="study-header">
+                            <button id="return-to-decks-button" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Decks
+                            </button>
+                            <div class="progress-container">
+                                <div class="progress-stats">
+                                    <div class="stat">
+                                        <i class="fas fa-check"></i>
+                                        <span id="known-count">0</span>
+                                    </div>
+                                    <div class="stat">
+                                        <i class="fas fa-times"></i>
+                                        <span id="unknown-count">0</span>
+                                    </div>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div id="card-progress-bar" class="progress-bar"></div>
+                                </div>
+                                <div id="card-count" class="progress-text">Card 1 of 10</div>
+                            </div>
+                        </div>
+
+                        <div class="flashcard-wrapper">
+                            <div id="flashcard" class="flashcard">
+                                <div class="card-side front">
+                                    <div id="card-front-content" class="card-content"></div>
+                                    <button id="flip-card" class="btn btn-text">Flip Card</button>
+                                </div>
+                                <div class="card-side back">
+                                    <div id="card-back-content" class="card-content"></div>
+                                </div>
+                            </div>
+
+                            <div id="flashcard-response-buttons" class="response-buttons" style="display: none;">
+                                <button id="unknown-button" class="btn btn-danger">
+                                    <i class="fas fa-times"></i> Don't Know
+                                </button>
+                                <button id="known-button" class="btn btn-success">
+                                    <i class="fas fa-check"></i> Know
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session Summary -->
+                    <div id="session-summary" style="display: none;"></div>
+                </div>
+            </section>
+
+            <!-- Quiz Tab -->
+            <section id="quiz-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Quizzes</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">Create New Quiz</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <!-- Quiz Categories -->
+                    <div class="quiz-categories">
+                        <div class="quiz-category-card purple">
+                            <div class="category-banner">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="category-content">
+                                <h4>Programming</h4>
+                                <div class="category-stats">
+                                    <span><i class="fas fa-file-alt"></i> 5 Quizzes</span>
+                                    <span><i class="fas fa-star"></i> 4.8 Rating</span>
+                                </div>
+                                <button class="btn btn-sm btn-primary view-category-quizzes" data-category="Programming">View Quizzes</button>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-category-card blue">
+                            <div class="category-banner">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="category-content">
+                                <h4>Psychology</h4>
+                                <div class="category-stats">
+                                    <span><i class="fas fa-file-alt"></i> 7 Quizzes</span>
+                                    <span><i class="fas fa-star"></i> 4.5 Rating</span>
+                                </div>
+                                <button class="btn btn-sm btn-primary view-category-quizzes" data-category="Education">View Quizzes</button>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-category-card orange">
+                            <div class="category-banner">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="category-content">
+                                <h4>Mathematics</h4>
+                                <div class="category-stats">
+                                    <span><i class="fas fa-file-alt"></i> 4 Quizzes</span>
+                                    <span><i class="fas fa-star"></i> 4.2 Rating</span>
+                                </div>
+                                <button class="btn btn-sm btn-primary view-category-quizzes" data-category="Mathematics">View Quizzes</button>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-category-card teal">
+                            <div class="category-banner">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="category-content">
+                                <h4>Data Science</h4>
+                                <div class="category-stats">
+                                    <span><i class="fas fa-file-alt"></i> 6 Quizzes</span>
+                                    <span><i class="fas fa-star"></i> 4.7 Rating</span>
+                                </div>
+                                <button class="btn btn-sm btn-primary view-category-quizzes" data-category="AI & Machine Learning">View Quizzes</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz List Container -->
+                    <div id="quiz-list-container" style="display: none;">
+                        <div class="list-header">
+                            <button class="btn btn-secondary back-to-categories">
+                                <i class="fas fa-arrow-left"></i> Back to Categories
+                            </button>
+                            <h3 class="category-title">Quizzes in <span id="current-category"></span></h3>
+                        </div>
+                        <div class="quiz-cards-container"></div>
+                    </div>
+                    
+                    <!-- Quiz Container -->
+                    <div id="quiz-container" style="display: none;">
+                        <div class="quiz-header">
+                            <div class="quiz-title-container">
+                                <h3 id="current-quiz-title"></h3>
+                                <div class="quiz-progress">
+                                    Question <span id="current-question-number">1</span> of <span id="total-questions">10</span>
+                                </div>
+                            </div>
+                            <div class="quiz-timer">
+                                <i class="fas fa-clock"></i> <span id="timer-display">00:00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="question-container" id="question-container">
+                            <div class="question-header">
+                                <div class="difficulty-indicator difficulty-2">
+                                    ★★☆
+                                </div>
+                                <h3 class="question-text">Sample question text will appear here.</h3>
+                            </div>
+                            <div class="options-container">
+                                <div class="option" data-option-id="a">
+                                    <div class="option-marker">A</div>
+                                    <div class="option-text">First option</div>
+                                </div>
+                                <div class="option" data-option-id="b">
+                                    <div class="option-marker">B</div>
+                                    <div class="option-text">Second option</div>
+                                </div>
+                                <div class="option" data-option-id="c">
+                                    <div class="option-marker">C</div>
+                                    <div class="option-text">Third option</div>
+                                </div>
+                                <div class="option" data-option-id="d">
+                                    <div class="option-marker">D</div>
+                                    <div class="option-text">Fourth option</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-navigation">
+                            <button id="next-question" class="btn btn-primary">Next Question</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz Results Container -->
+                    <div id="quiz-results-container" style="display: none;">
+                        <!-- Results content will be dynamically generated -->
+                    </div>
+                    
+                    <!-- Recently Taken Quizzes -->
+                    <div class="quiz-list" id="recent-quizzes">
+                        <h3>Recently Taken Quizzes</h3>
+                        
+                        <div class="quiz-card">
+                            <div class="quiz-card-left">
+                                <div class="quiz-title">JavaScript Fundamentals Quiz</div>
+                                <div class="quiz-meta">
+                                    <span><i class="fas fa-question-circle"></i> 15 Questions</span>
+                                    <span><i class="fas fa-clock"></i> 30 Minutes</span>
+                                    <span><i class="fas fa-calendar-alt"></i> Last Taken: May 15, 2023</span>
+                                </div>
+                                <p>Test your knowledge of JavaScript variables, functions, and basic concepts.</p>
+                                <div class="quiz-card-action">
+                                    <button class="btn btn-primary">Retake Quiz</button>
+                                </div>
+                            </div>
+                            <div class="quiz-card-right">
+                                <div class="quiz-score" style="--percent: 85" data-score="85%"></div>
+                                <div class="quiz-score-label">Score</div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-card">
+                            <div class="quiz-card-left">
+                                <div class="quiz-title">Data Structures & Algorithms</div>
+                                <div class="quiz-meta">
+                                    <span><i class="fas fa-question-circle"></i> 20 Questions</span>
+                                    <span><i class="fas fa-clock"></i> 45 Minutes</span>
+                                    <span><i class="fas fa-calendar-alt"></i> Last Taken: May 10, 2023</span>
+                                </div>
+                                <p>Test your knowledge of arrays, linked lists, trees, and sorting algorithms.</p>
+                                <div class="quiz-card-action">
+                                    <button class="btn btn-primary">Retake Quiz</button>
+                                </div>
+                            </div>
+                            <div class="quiz-card-right">
+                                <div class="quiz-score" style="--percent: 72" data-score="72%"></div>
+                                <div class="quiz-score-label">Score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Habits Tab -->
+            <section id="habits-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Daily Habits</h1>
+                    <div class="tab-actions">
+                        <button id="add-habit-btn" class="btn btn-primary">New Habit</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="habit-stats-container">
+                        <div class="stats-section">
+                            <h3>My Habit Stats</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card highlight">
+                                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">12</div>
+                                        <div class="stat-label">Completed Today</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">85%</div>
+                                        <div class="stat-label">Weekly Completion</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">7</div>
+                                        <div class="stat-label">Longest Streak</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                                    <div class="stat-content">
+                                        <div class="stat-value">5</div>
+                                        <div class="stat-label">Active Habits</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="habit-grid">
+                        <div class="habit-card purple">
+                            <div class="habit-card-header">
+                                <div class="habit-icon-container">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="habit-info">
+                                    <div class="habit-title">Read 30 Minutes</div>
+                                    <div class="habit-subtitle"><i class="fas fa-clock"></i> Evening</div>
+                                </div>
+                            </div>
+                            <div class="habit-card-body">
+                                <div class="habit-streak-container">
+                                    <div class="habit-card-streak">
+                                        <i class="fas fa-fire"></i>
+                                        <span class="streak-value">5 day streak</span>
+                                    </div>
+                                </div>
+                                <div class="habit-week-view">
+                                    <div class="habit-day">
+                                        <div class="day-label">Sun</div>
+                                        <div class="day-indicator completed">S</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Mon</div>
+                                        <div class="day-indicator completed">M</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Tue</div>
+                                        <div class="day-indicator completed">T</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Wed</div>
+                                        <div class="day-indicator completed">W</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Thu</div>
+                                        <div class="day-indicator completed">T</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Fri</div>
+                                        <div class="day-indicator today">F</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Sat</div>
+                                        <div class="day-indicator">S</div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="btn btn-success">Complete</button>
+                                    <button class="btn btn-secondary">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="habit-card blue">
+                            <div class="habit-card-header">
+                                <div class="habit-icon-container">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="habit-info">
+                                    <div class="habit-title">Code Practice</div>
+                                    <div class="habit-subtitle"><i class="fas fa-clock"></i> Morning</div>
+                                </div>
+                            </div>
+                            <div class="habit-card-body">
+                                <div class="habit-streak-container">
+                                    <div class="habit-card-streak">
+                                        <i class="fas fa-fire"></i>
+                                        <span class="streak-value">3 day streak</span>
+                                    </div>
+                                </div>
+                                <div class="habit-week-view">
+                                    <div class="habit-day">
+                                        <div class="day-label">Sun</div>
+                                        <div class="day-indicator">S</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Mon</div>
+                                        <div class="day-indicator">M</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Tue</div>
+                                        <div class="day-indicator completed">T</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Wed</div>
+                                        <div class="day-indicator completed">W</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Thu</div>
+                                        <div class="day-indicator completed">T</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Fri</div>
+                                        <div class="day-indicator today">F</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Sat</div>
+                                        <div class="day-indicator">S</div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="btn btn-success">Complete</button>
+                                    <button class="btn btn-secondary">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="habit-card teal">
+                            <div class="habit-card-header">
+                                <div class="habit-icon-container">
+                                    <i class="fas fa-dumbbell"></i>
+                                </div>
+                                <div class="habit-info">
+                                    <div class="habit-title">Exercise 30 Minutes</div>
+                                    <div class="habit-subtitle"><i class="fas fa-clock"></i> Afternoon</div>
+                                </div>
+                            </div>
+                            <div class="habit-card-body">
+                                <div class="habit-streak-container">
+                                    <div class="habit-card-streak">
+                                        <i class="fas fa-fire"></i>
+                                        <span class="streak-value">7 day streak</span>
+                                    </div>
+                                </div>
+                                <div class="habit-week-view">
+                                    <div class="habit-day">
+                                        <div class="day-label">Sun</div>
+                                        <div class="day-indicator completed">S</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Mon</div>
+                                        <div class="day-indicator completed">M</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Tue</div>
+                                        <div class="day-indicator completed">T</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Wed</div>
+                                        <div class="day-indicator completed">W</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Thu</div>
+                                        <div class="day-indicator completed">T</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Fri</div>
+                                        <div class="day-indicator today completed">F</div>
+                                    </div>
+                                    <div class="habit-day">
+                                        <div class="day-label">Sat</div>
+                                        <div class="day-indicator">S</div>
+                                    </div>
+                                </div>
+                                <div class="habit-card-actions">
+                                    <button class="btn btn-danger">Skip</button>
+                                    <button class="btn btn-secondary">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses Tab -->
+            <section id="courses-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Course Catalog</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">My Enrolled Courses</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="course-container">
+                        <div class="course-filters">
+                            <div class="filter-section">
+                                <div class="filter-header">Categories</div>
+                                <div class="filter-group">
+                                    <div class="filter-option active">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Programming</span>
+                                    </div>
+                                    <div class="filter-option">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Data Science</span>
+                                    </div>
+                                    <div class="filter-option">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Design</span>
+                                    </div>
+                                    <div class="filter-option">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Business</span>
+                                    </div>
+                                    <div class="filter-option">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Marketing</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-section">
+                                <div class="filter-header">Difficulty</div>
+                                <div class="filter-group">
+                                    <div class="filter-option">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Beginner</span>
+                                    </div>
+                                    <div class="filter-option active">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Intermediate</span>
+                                    </div>
+                                    <div class="filter-option">
+                                        <div class="filter-checkbox"></div>
+                                        <span>Advanced</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-section">
+                                <div class="filter-header">Duration</div>
+                                <div class="range-filter">
+                                    <div class="range-slider">
+                                        <div class="range-progress" style="width: 60%;"></div>
+                                        <div class="range-handle" style="left: 60%;"></div>
+                                    </div>
+                                    <div class="range-values">
+                                        <span>1 hour</span>
+                                        <span>20 hours</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-section">
+                                <div class="filter-header">Rating</div>
+                                <div class="filter-group">
+                                    <div class="filter-option active">
+                                        <div class="filter-checkbox"></div>
+                                        <span>4+ Stars</span>
+                                    </div>
+                                    <div class="filter-option">
+                                        <div class="filter-checkbox"></div>
+                                        <span>3+ Stars</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="courses-grid">
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg" alt="JavaScript Fundamentals">
+                                    <div class="course-difficulty course-intermediate">Intermediate</div>
+                                </div>
+                                <div class="course-content">
+                                    <div class="course-category">Programming</div>
+                                    <h3 class="course-title">Advanced JavaScript Concepts</h3>
+                                    <p class="course-description">Deep dive into JavaScript's advanced concepts including closures, prototypes, async patterns, and ES6+ features.</p>
+                                    <div class="course-meta">
+                                        <span><i class="fas fa-clock"></i> 12 hours</span>
+                                        <span><i class="fas fa-play-circle"></i> 24 lessons</span>
+                                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                                    </div>
+                                    <div class="course-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="rating-count">(432)</span>
+                                    </div>
+                                    <button class="btn btn-primary">Enroll Now</button>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <img src="https://cdn.pixabay.com/photo/2020/04/25/12/14/circle-5090539_1280.jpg" alt="Data Science Fundamentals">
+                                    <div class="course-difficulty course-beginner">Beginner</div>
+                                </div>
+                                <div class="course-content">
+                                    <div class="course-category">Data Science</div>
+                                    <h3 class="course-title">Introduction to Data Science</h3>
+                                    <p class="course-description">Learn the fundamentals of data science, including Python, data analysis, visualization, and basic machine learning.</p>
+                                    <div class="course-meta">
+                                        <span><i class="fas fa-clock"></i> 15 hours</span>
+                                        <span><i class="fas fa-play-circle"></i> 30 lessons</span>
+                                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                                    </div>
+                                    <div class="course-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(298)</span>
+                                    </div>
+                                    <button class="btn btn-primary">Enroll Now</button>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <img src="https://cdn.pixabay.com/photo/2018/05/16/18/16/businessman-3406954_1280.jpg" alt="Product Management">
+                                    <div class="course-difficulty course-advanced">Advanced</div>
+                                </div>
+                                <div class="course-content">
+                                    <div class="course-category">Business</div>
+                                    <h3 class="course-title">Advanced Product Management</h3>
+                                    <p class="course-description">Master the art of product management with advanced techniques for roadmapping, user research, and product strategy.</p>
+                                    <div class="course-meta">
+                                        <span><i class="fas fa-clock"></i> 18 hours</span>
+                                        <span><i class="fas fa-play-circle"></i> 36 lessons</span>
+                                        <span><i class="fas fa-certificate"></i> Certificate</span>
+                                    </div>
+                                    <div class="course-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-count">(176)</span>
+                                    </div>
+                                    <button class="btn btn-primary">Enroll Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reading Log Tab -->
+            <section id="reading-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Reading Log</h1>
+                    <div class="tab-actions">
+                        <button id="add-book-btn" class="btn btn-primary">Add Book</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="reading-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="total-books">0</div>
+                            <div class="stat-label">Total Books</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="completed-books">0</div>
+                            <div class="stat-label">Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="in-progress-books">0</div>
+                            <div class="stat-label">In Progress</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avg-rating">0.0</div>
+                            <div class="stat-label">Avg. Rating</div>
+                        </div>
+                    </div>
+
+                    <div class="reading-controls">
+                        <div class="search-filter">
+                            <input type="search" id="book-search" placeholder="Search titles, authors...">
+                        </div>
+                        <div class="table-view-controls">
+                            <button class="btn btn-sm active" data-view="table">
+                                <i class="fas fa-table"></i> Table
+                            </button>
+                            <button class="btn btn-sm" data-view="grid">
+                                <i class="fas fa-th-large"></i> Grid
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="reading-table-container">
+                        <table id="reading-log-table" class="reading-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="title">Title <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="author">Author <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="category">Category <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="progress">Progress <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="rating">Rating <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="date">Date Added <i class="fas fa-sort"></i></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reading-log-body">
+                                <!-- Reading entries will be inserted here by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Add Book Modal -->
+                    <div id="add-book-modal" class="modal-container" style="display: none;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Add New Book</h3>
+                                <button class="btn-close" id="close-book-modal">&times;</button>
+                            </div>
+                            <form id="add-book-form">
+                                <div class="form-group">
+                                    <label for="book-title">Book Title</label>
+                                    <input type="text" id="book-title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-author">Author</label>
+                                    <input type="text" id="book-author" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-category">Category</label>
+                                    <select id="book-category">
+                                        <option value="Fiction">Fiction</option>
+                                        <option value="Non-Fiction">Non-Fiction</option>
+                                        <option value="Science">Science</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Psychology">Psychology</option>
+                                        <option value="Business">Business</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-progress">Progress</label>
+                                    <select id="book-progress">
+                                        <option value="Not Started">Not Started</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-rating">Rating</label>
+                                    <div class="rating-input">
+                                        <i class="far fa-star" data-rating="1"></i>
+                                        <i class="far fa-star" data-rating="2"></i>
+                                        <i class="far fa-star" data-rating="3"></i>
+                                        <i class="far fa-star" data-rating="4"></i>
+                                        <i class="far fa-star" data-rating="5"></i>
+                                    </div>
+                                    <input type="hidden" id="book-rating" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-notes">Notes</label>
+                                    <textarea id="book-notes"></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancel-add-book">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Add Book</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Markdown Editor Tab -->
+            <section id="markdown-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Markdown Editor</h1>
+                    <div class="tab-actions">
+                        <button id="save-note" class="btn btn-primary">Save Note</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="markdown-container">
+                        <div class="notes-sidebar">
+                            <div class="notes-header">
+                                <h3>My Notes</h3>
+                                <button id="new-note" class="btn btn-sm">
+                                    <i class="fas fa-plus"></i> New
+                                </button>
+                            </div>
+                            <div class="search-notes">
+                                <input type="search" placeholder="Search notes...">
+                            </div>
+                            <div id="notes-list" class="notes-list">
+                                <!-- Notes list will be populated by JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="editor-container">
+                            <div class="editor-toolbar">
+                                <button data-command="bold" title="Bold"><i class="fas fa-bold"></i></button>
+                                <button data-command="italic" title="Italic"><i class="fas fa-italic"></i></button>
+                                <button data-command="heading" title="Heading"><i class="fas fa-heading"></i></button>
+                                <button data-command="list-ul" title="Bulleted List"><i class="fas fa-list-ul"></i></button>
+                                <button data-command="list-ol" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                                <button data-command="link" title="Link"><i class="fas fa-link"></i></button>
+                                <button data-command="image" title="Image"><i class="fas fa-image"></i></button>
+                                <button data-command="code" title="Code"><i class="fas fa-code"></i></button>
+                            </div>
+                            <div class="editor-panes">
+                                <div class="editor-pane">
+                                    <textarea id="markdown-input" placeholder="Write your markdown here..."></textarea>
+                                </div>
+                                <div class="preview-pane">
+                                    <div id="markdown-preview"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Video Player Tab -->
+            <section id="videos-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Video Player</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">My Playlists</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="video-section">
+                        <div class="video-player-container">
+                            <div class="video-player">
+                                <img src="https://cdn.pixabay.com/photo/2020/04/25/12/14/circle-5090539_1280.jpg" alt="Video Thumbnail" class="video-placeholder">
+                                <div class="video-play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-controls">
+                                <div class="video-progress">
+                                    <div class="video-progress-bar">
+                                        <div class="video-progress-handle"></div>
+                                    </div>
+                                </div>
+                                <div class="video-control-buttons">
+                                    <div class="video-left-controls">
+                                        <button class="video-control-button">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <button class="video-control-button">
+                                            <i class="fas fa-step-backward"></i>
+                                        </button>
+                                        <button class="video-control-button">
+                                            <i class="fas fa-step-forward"></i>
+                                        </button>
+                                        <div class="video-volume">
+                                            <button class="video-control-button">
+                                                <i class="fas fa-volume-up"></i>
+                                            </button>
+                                            <div class="video-volume-slider">
+                                                <div class="video-volume-level"></div>
+                                            </div>
+                                        </div>
+                                        <div class="video-time">12:34 / 45:00</div>
+                                    </div>
+                                    <div class="video-right-controls">
+                                        <button class="video-control-button">
+                                            <i class="fas fa-closed-captioning"></i>
+                                        </button>
+                                        <button class="video-control-button">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                        <button class="video-control-button">
+                                            <i class="fas fa-expand"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="video-playlist">
+                            <div class="playlist-header">
+                                <div class="playlist-title">Advanced JavaScript Course</div>
+                            </div>
+                            <div class="playlist-search">
+                                <input type="text" placeholder="Search videos...">
+                            </div>
+                            <div class="playlist-items">
+                                <div class="playlist-item active">
+                                    <div class="video-number">1</div>
+                                    <div class="playlist-item-details">
+                                        <div class="playlist-item-title">Introduction to Advanced JavaScript</div>
+                                        <div class="playlist-item-meta">
+                                            <span><i class="fas fa-play"></i> Currently Playing</span>
+                                        </div>
+                                    </div>
+                                    <div class="video-duration">12:45</div>
+                                </div>
+                                
+                                <div class="playlist-item">
+                                    <div class="video-number">2</div>
+                                    <div class="playlist-item-details">
+                                        <div class="playlist-item-title">Closures and Scopes</div>
+                                        <div class="playlist-item-meta">
+                                            <span><i class="fas fa-lock-open"></i> Unlocked</span>
+                                        </div>
+                                    </div>
+                                    <div class="video-duration">18:30</div>
+                                </div>
+                                
+                                <div class="playlist-item">
+                                    <div class="video-number">3</div>
+                                    <div class="playlist-item-details">
+                                        <div class="playlist-item-title">Prototypal Inheritance</div>
+                                        <div class="playlist-item-meta">
+                                            <span><i class="fas fa-lock-open"></i> Unlocked</span>
+                                        </div>
+                                    </div>
+                                    <div class="video-duration">22:15</div>
+                                </div>
+                                
+                                <div class="playlist-item">
+                                    <div class="video-number">4</div>
+                                    <div class="playlist-item-details">
+                                        <div class="playlist-item-title">Async Programming in JavaScript</div>
+                                        <div class="playlist-item-meta">
+                                            <span><i class="fas fa-lock"></i> Locked</span>
+                                        </div>
+                                    </div>
+                                    <div class="video-duration">25:10</div>
+                                </div>
+                                
+                                <div class="playlist-item">
+                                    <div class="video-number">5</div>
+                                    <div class="playlist-item-details">
+                                        <div class="playlist-item-title">ES6+ Features and Syntax</div>
+                                        <div class="playlist-item-meta">
+                                            <span><i class="fas fa-lock"></i> Locked</span>
+                                        </div>
+                                    </div>
+                                    <div class="video-duration">19:45</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson Timeline Tab -->
+            <section id="timeline-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Lesson Timeline</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">View Calendar</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="timeline-overview">
+                        <div class="timeline-header">
+                            <div class="timeline-actions">
+                                <div class="timeline-filter">
+                                    <select class="timeline-select">
+                                        <option value="all">All Courses</option>
+                                        <option value="js">Advanced JavaScript</option>
+                                        <option value="psychology">Cognitive Psychology</option>
+                                        <option value="data">Data Analysis</option>
+                                    </select>
+                                </div>
+                                <div class="timeline-period">
+                                    <button class="btn btn-sm active">Week</button>
+                                    <button class="btn btn-sm">Month</button>
+                                    <button class="btn btn-sm">Semester</button>
+                                </div>
+                            </div>
+                            <div class="timeline-legend">
+                                <div class="legend-item">
+                                    <span class="legend-indicator completed"></span>
+                                    <span>Completed</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-indicator current"></span>
+                                    <span>Current</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-indicator upcoming"></span>
+                                    <span>Upcoming</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="course-timelines">
+                            <div class="course-timeline">
+                                <div class="course-timeline-header">
+                                    <div class="course-info">
+                                        <div class="course-icon" style="background: var(--gradient-blue);">
+                                            <i class="fas fa-code"></i>
+                                        </div>
+                                        <div class="course-details">
+                                            <h3>Advanced JavaScript</h3>
+                                            <div class="course-progress">
+                                                <div class="progress-container">
+                                                    <div class="progress-bar" style="width: 65%"></div>
+                                                </div>
+                                                <span class="progress-text">65% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-modules">
+                                    <div class="timeline-module completed">
+                                        <div class="module-marker"></div>
+                                        <div class="module-content">
+                                            <h4>Module 1: JavaScript Fundamentals</h4>
+                                            <div class="module-meta">
+                                                <span><i class="fas fa-calendar-check"></i> Completed: May 5, 2023</span>
+                                                <span><i class="fas fa-clock"></i> 4 hours</span>
+                                                <span><i class="fas fa-check-circle"></i> Quiz Score: 92%</span>
+                                            </div>
+                                            <div class="module-lessons">
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 1: Variables and Data Types</span>
+                                                </div>
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 2: Functions and Scope</span>
+                                                </div>
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 3: Objects and Arrays</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-module completed">
+                                        <div class="module-marker"></div>
+                                        <div class="module-content">
+                                            <h4>Module 2: Advanced Concepts</h4>
+                                            <div class="module-meta">
+                                                <span><i class="fas fa-calendar-check"></i> Completed: May 15, 2023</span>
+                                                <span><i class="fas fa-clock"></i> 5 hours</span>
+                                                <span><i class="fas fa-check-circle"></i> Quiz Score: 88%</span>
+                                            </div>
+                                            <div class="module-lessons">
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 1: Closures and Scopes</span>
+                                                </div>
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 2: Prototypal Inheritance</span>
+                                                </div>
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 3: Error Handling</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-module current">
+                                        <div class="module-marker"></div>
+                                        <div class="module-content">
+                                            <h4>Module 3: Async Programming</h4>
+                                            <div class="module-meta">
+                                                <span><i class="fas fa-calendar"></i> Started: May 20, 2023</span>
+                                                <span><i class="fas fa-clock"></i> 6 hours</span>
+                                                <span><i class="fas fa-spinner"></i> In Progress: 2/4 lessons</span>
+                                            </div>
+                                            <div class="module-lessons">
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 1: Callbacks and Event Loop</span>
+                                                </div>
+                                                <div class="module-lesson completed">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>Lesson 2: Promises</span>
+                                                </div>
+                                                <div class="module-lesson current">
+                                                    <i class="fas fa-circle"></i>
+                                                    <span>Lesson 3: Async/Await</span>
+                                                </div>
+                                                <div class="module-lesson">
+                                                    <i class="far fa-circle"></i>
+                                                    <span>Lesson 4: Advanced Async Patterns</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-module upcoming">
+                                        <div class="module-marker"></div>
+                                        <div class="module-content">
+                                            <h4>Module 4: Modern JavaScript</h4>
+                                            <div class="module-meta">
+                                                <span><i class="fas fa-calendar"></i> Upcoming: June 5, 2023</span>
+                                                <span><i class="fas fa-clock"></i> 5 hours</span>
+                                                <span><i class="fas fa-lock"></i> Locked</span>
+                                            </div>
+                                            <div class="module-lessons">
+                                                <div class="module-lesson">
+                                                    <i class="far fa-circle"></i>
+                                                    <span>Lesson 1: ES6+ Features</span>
+                                                </div>
+                                                <div class="module-lesson">
+                                                    <i class="far fa-circle"></i>
+                                                    <span>Lesson 2: Modules and Bundlers</span>
+                                                </div>
+                                                <div class="module-lesson">
+                                                    <i class="far fa-circle"></i>
+                                                    <span>Lesson 3: Modern Development Workflow</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Analytics Tab -->
+            <section id="analytics-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Learning Analytics</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">Download Report</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="analytics-filters">
+                        <div class="filter-group">
+                            <div class="filter-item">
+                                <label>Time Period</label>
+                                <select class="analytics-select">
+                                    <option value="week">Last Week</option>
+                                    <option value="month" selected>Last Month</option>
+                                    <option value="3months">Last 3 Months</option>
+                                    <option value="year">Last Year</option>
+                                    <option value="all">All Time</option>
+                                </select>
+                            </div>
+                            <div class="filter-item">
+                                <label>Activity Type</label>
+                                <select class="analytics-select">
+                                    <option value="all" selected>All Activities</option>
+                                    <option value="courses">Courses</option>
+                                    <option value="flashcards">Flashcards</option>
+                                    <option value="quizzes">Quizzes</option>
+                                    <option value="reading">Reading</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-overview">
+                        <div class="stats-grid">
+                            <div class="stat-card highlight">
+                                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                                <div class="stat-content">
+                                    <div class="stat-value">43.5h</div>
+                                    <div class="stat-label">Total Study Time</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                                <div class="stat-content">
+                                    <div class="stat-value">87%</div>
+                                    <div class="stat-label">Average Score</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                                <div class="stat-content">
+                                    <div class="stat-value">35</div>
+                                    <div class="stat-label">Lessons Completed</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                                <div class="stat-content">
+                                    <div class="stat-value">92%</div>
+                                    <div class="stat-label">Streak Consistency</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-charts">
+                        <div class="analytics-card">
+                            <div class="card-header">
+                                <h3>Daily Study Time</h3>
+                                <div class="card-options">
+                                    <button class="btn btn-sm">Hours</button>
+                                    <button class="btn btn-sm active">Sessions</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <div class="chart-placeholder">
+                                    <div class="chart-bars">
+                                        <div class="chart-bar" style="height: 40%"><span class="bar-label">M</span></div>
+                                        <div class="chart-bar" style="height: 65%"><span class="bar-label">T</span></div>
+                                        <div class="chart-bar" style="height: 45%"><span class="bar-label">W</span></div>
+                                        <div class="chart-bar" style="height: 80%"><span class="bar-label">T</span></div>
+                                        <div class="chart-bar" style="height: 70%"><span class="bar-label">F</span></div>
+                                        <div class="chart-bar" style="height: 30%"><span class="bar-label">S</span></div>
+                                        <div class="chart-bar" style="height: 25%"><span class="bar-label">S</span></div>
+                                    </div>
+                                    <div class="chart-axis">
+                                        <div class="axis-label">3h</div>
+                                        <div class="axis-label">2h</div>
+                                        <div class="axis-label">1h</div>
+                                        <div class="axis-label">0h</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <div class="card-header">
+                                <h3>Performance by Category</h3>
+                            </div>
+                            <div class="chart-container">
+                                <div class="chart-placeholder">
+                                    <div class="radar-chart">
+                                        <div class="radar-point" style="--angle: 0deg; --distance: 90%;">
+                                            <span class="radar-label">Programming</span>
+                                        </div>
+                                        <div class="radar-point" style="--angle: 72deg; --distance: 75%;">
+                                            <span class="radar-label">Math</span>
+                                        </div>
+                                        <div class="radar-point" style="--angle: 144deg; --distance: 82%;">
+                                            <span class="radar-label">Science</span>
+                                        </div>
+                                        <div class="radar-point" style="--angle: 216deg; --distance: 65%;">
+                                            <span class="radar-label">Language</span>
+                                        </div>
+                                        <div class="radar-point" style="--angle: 288deg; --distance: 88%;">
+                                            <span class="radar-label">Psychology</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card full-width">
+                            <div class="card-header">
+                                <h3>Learning Progress Timeline</h3>
+                            </div>
+                            <div class="chart-container">
+                                <div class="chart-placeholder line-chart">
+                                    <div class="line-point" style="--x: 10%; --y: 80%"></div>
+                                    <div class="line-point" style="--x: 20%; --y: 60%"></div>
+                                    <div class="line-point" style="--x: 30%; --y: 75%"></div>
+                                    <div class="line-point" style="--x: 40%; --y: 65%"></div>
+                                    <div class="line-point" style="--x: 50%; --y: 80%"></div>
+                                    <div class="line-point" style="--x: 60%; --y: 85%"></div>
+                                    <div class="line-point" style="--x: 70%; --y: 75%"></div>
+                                    <div class="line-point" style="--x: 80%; --y: 90%"></div>
+                                    <div class="line-point" style="--x: 90%; --y: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-insights">
+                        <h3>Learning Insights</h3>
+                        <div class="insights-grid">
+                            <div class="insight-card">
+                                <div class="insight-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Peak Performance</h4>
+                                    <p>Your most productive study times are between 9AM-11AM. Consider scheduling important learning sessions during this window.</p>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Progress Trend</h4>
+                                    <p>Your learning progress has increased by 23% over the last month. Keep up the consistent study habits!</p>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Strengths</h4>
+                                    <p>You excel in Programming and Psychology topics with average scores above 85%. Consider trying more advanced material.</p>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-icon">
+                                    <i class="fas fa-medal"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Areas for Improvement</h4>
+                                    <p>Language quizzes show lower performance (65%). We suggest additional practice with vocabulary flashcards.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Report Tab -->
+            <section id="progress-tab" class="content-tab">
+                <div class="tab-header">
+                    <h1>Progress Report</h1>
+                    <div class="tab-actions">
+                        <button class="btn btn-primary">Export PDF</button>
+                    </div>
+                </div>
+
+                <div class="content-container">
+                    <div class="progress-summary-container">
+                        <div class="progress-card overall-progress">
+                            <div class="progress-header">
+                                <h3>Overall Learning Progress</h3>
+                                <div class="badge success">On Track</div>
+                            </div>
+                            <div class="overall-progress-visual">
+                                <div class="progress-circle" data-progress="78">
+                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle class="progress-circle-bg" cx="50" cy="50" r="45" />
+                                        <circle class="progress-circle-fill" cx="50" cy="50" r="45" stroke-dasharray="283" stroke-dashoffset="62" />
+                                        <text class="progress-text" x="50" y="50">78%</text>
+                                    </svg>
+                                </div>
+                                <div class="progress-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-value">3</span>
+                                        <span class="stat-label">Courses In Progress</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value">35/45</span>
+                                        <span class="stat-label">Lessons Completed</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value">12</span>
+                                        <span class="stat-label">Quizzes Completed</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value">5</span>
+                                        <span class="stat-label">Badges Earned</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-card skills-progress">
+                            <div class="progress-header">
+                                <h3>Skills Acquired</h3>
+                            </div>
+                            <div class="skills-list">
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span class="skill-name">JavaScript Programming</span>
+                                        <span class="skill-level">Advanced</span>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span class="skill-name">Data Analysis</span>
+                                        <span class="skill-level">Intermediate</span>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span class="skill-name">Cognitive Psychology</span>
+                                        <span class="skill-level">Intermediate</span>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 72%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span class="skill-name">Research Methods</span>
+                                        <span class="skill-level">Beginner</span>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 35%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="courses-progress-section">
+                        <h3>Course Progress Details</h3>
+                        <div class="course-progress-cards">
+                            <div class="course-progress-card">
+                                <div class="course-progress-header">
+                                    <div class="course-icon" style="background: var(--gradient-blue);">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="course-details">
+                                        <h4>Advanced JavaScript</h4>
+                                        <div class="course-progress-stats">
+                                            <span><i class="fas fa-calendar-check"></i> Started: May 1, 2023</span>
+                                            <span><i class="fas fa-clock"></i> Est. completion: July 1, 2023</span>
+                                        </div>
+                                    </div>
+                                    <div class="course-grade">
+                                        <div class="grade">A-</div>
+                                        <div class="grade-label">Current Grade</div>
+                                    </div>
+                                </div>
+                                <div class="modules-progress">
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 1: JavaScript Fundamentals</span>
+                                            <span class="module-status completed">100%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 2: Advanced Concepts</span>
+                                            <span class="module-status completed">100%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 3: Async Programming</span>
+                                            <span class="module-status in-progress">50%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 4: Modern JavaScript</span>
+                                            <span class="module-status">0%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="course-progress-card">
+                                <div class="course-progress-header">
+                                    <div class="course-icon" style="background: var(--gradient-purple);">
+                                        <i class="fas fa-brain"></i>
+                                    </div>
+                                    <div class="course-details">
+                                        <h4>Cognitive Psychology</h4>
+                                        <div class="course-progress-stats">
+                                            <span><i class="fas fa-calendar-check"></i> Started: April 15, 2023</span>
+                                            <span><i class="fas fa-clock"></i> Est. completion: June 30, 2023</span>
+                                        </div>
+                                    </div>
+                                    <div class="course-grade">
+                                        <div class="grade">B+</div>
+                                        <div class="grade-label">Current Grade</div>
+                                    </div>
+                                </div>
+                                <div class="modules-progress">
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 1: Introduction to Cognition</span>
+                                            <span class="module-status completed">100%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 2: Perception and Attention</span>
+                                            <span class="module-status completed">100%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 3: Memory Models</span>
+                                            <span class="module-status in-progress">60%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="module-progress-item">
+                                        <div class="module-info">
+                                            <span class="module-name">Module 4: Language and Thought</span>
+                                            <span class="module-status">0%</span>
+                                        </div>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="achievements-section">
+                        <h3>Recent Achievements</h3>
+                        <div class="achievements-grid">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <div class="achievement-content">
+                                    <h4>Perfect Score</h4>
+                                    <p>Scored 100% on Advanced JavaScript Module 2 Quiz</p>
+                                    <div class="achievement-date">May 15, 2023</div>
+                                </div>
+                            </div>
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <div class="achievement-content">
+                                    <h4>Study Streak</h4>
+                                    <p>Maintained a 7-day study streak</p>
+                                    <div class="achievement-date">Ongoing</div>
+                                </div>
+                            </div>
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="achievement-content">
+                                    <h4>Bookworm</h4>
+                                    <p>Completed reading 5 books in your reading list</p>
+                                    <div class="achievement-date">May 10, 2023</div>
+                                </div>
+                            </div>
+                            <div class="achievement-card">
+                                <div class="achievement-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="achievement-content">
+                                    <h4>Module Master</h4>
+                                    <p>Completed all lessons in Cognitive Psychology Module 2</p>
+                                    <div class="achievement-date">April 28, 2023</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+    <script src="script.js"></script>
+    <script src="flashcards.js"></script>
+    <script src="quiz.js"></script>
+    <script src="habits.js"></script>
+    <script src="courses.js"></script>
+    <script src="readingLog.js"></script>
+    <script src="markdownEditor.js"></script>
+    <script>
+        // Hide preloader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.preloader').classList.add('hidden');
+            }, 1500); // Give it 1.5 seconds to show the loader
+        });
+
+        // Tab Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Get the tab to show
+                    const tabToShow = this.getAttribute('data-tab');
+                    
+                    // Hide all tabs
+                    document.querySelectorAll('.content-tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Remove active class from all nav items
+                    navItems.forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+                    
+                    // Show the selected tab
+                    let selectedTab = document.getElementById(tabToShow + '-tab');
+                    // If tab ID doesn't end with -tab, try adding it
+                    if (!selectedTab) {
+                        selectedTab = document.getElementById(tabToShow);
+                    }
+                    if (selectedTab) {
+                        selectedTab.classList.add('active');
+                    }
+                    
+                    // Add active class to the clicked nav item
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
+</body>
+</html> 
